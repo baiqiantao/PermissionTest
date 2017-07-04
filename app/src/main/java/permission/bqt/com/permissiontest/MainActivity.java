@@ -4,7 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -28,17 +28,12 @@ import java.util.Locale;
 public class MainActivity extends ListActivity {
 	
 	private static final int REQUESTCODE = 20094;
-	private static final int REQUESTCODE2 = 20095;
-	private static final int REQUESTCODE3 = 20096;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		String[] array = {"在没有申请权限的情况下在SD卡创建文件会失败",
 				"完整的授权过程演示",
-				"",
-				"",
-				"",
-				"",};
+				"演示PermissionsDispatcher",};
 		setListAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new ArrayList<>(Arrays.asList(array))));
 	}
 	
@@ -52,12 +47,7 @@ public class MainActivity extends ListActivity {
 				requestPermissionBeforeCreateFile();
 				break;
 			case 2:
-				break;
-			case 3:
-				
-				break;
-			case 4:
-				
+				startActivity(new Intent(this, Activity1.class));
 				break;
 		}
 	}
@@ -93,14 +83,11 @@ public class MainActivity extends ListActivity {
 			boolean state2 = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 			if (state2) {
 				// 一般是通过弹一个自定义的对话框告诉用户，我们为什么需要这个权限
-				new AlertDialog.Builder(this).setTitle("请求读写SD卡权限").setMessage("请求SD卡权限，作用是给你保存妹子图片")
-						.setPositiveButton("知道了", new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								ActivityCompat.requestPermissions(MainActivity.this,
-										new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUESTCODE);
-							}
-						}).create().show();
+				new AlertDialog.Builder(this)
+						.setTitle("请求读写SD卡权限").setMessage("请求SD卡权限，作用是给你保存妹子图片")
+						.setPositiveButton("知道了", (dialog, which) -> ActivityCompat.requestPermissions(MainActivity.this,
+								new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUESTCODE))
+						.create().show();
 			} else {
 				//请求用户授权几个权限，调用后系统会显示一个请求用户授权的提示对话框，开发者不能修改这个对话框
 				ActivityCompat.requestPermissions(MainActivity.this,//api 23以后可以调用Activity的requestPermissions方法
@@ -122,13 +109,8 @@ public class MainActivity extends ListActivity {
 					if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 						createFileWithoutRequestPermission(this);
 					} else {
-						Toast.makeText(this, "你竟然拒绝了权限，哼，我将在3秒后关闭！", Toast.LENGTH_SHORT).show();
-						new Handler().postDelayed(new Runnable() {
-							@Override
-							public void run() {
-								finish();
-							}
-						}, 3 * 1000);
+						Toast.makeText(this, "你拒绝了权限，我们已经没法愉快的玩耍了，我将在3秒后关闭！", Toast.LENGTH_SHORT).show();
+						new Handler().postDelayed(this::finish, 3 * 1000);
 					}
 				}
 			}
