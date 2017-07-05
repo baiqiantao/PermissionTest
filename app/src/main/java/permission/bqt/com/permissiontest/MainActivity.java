@@ -34,7 +34,8 @@ public class MainActivity extends ListActivity {
 		String[] array = {"在没有申请权限的情况下在SD卡创建文件会失败",
 				"完整的授权过程演示",
 				"演示PermissionsDispatcher",
-				"SoundPool演示",};
+				"SoundPool演示",
+				"MediaPlayer演示",};
 		setListAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new ArrayList<>(Arrays.asList(array))));
 	}
 	
@@ -48,10 +49,13 @@ public class MainActivity extends ListActivity {
 				requestPermissionBeforeCreateFile();
 				break;
 			case 2:
-				startActivity(new Intent(this, Activity1.class));
+				startActivity(new Intent(this, PermissionsDispatcherActivity.class));
 				break;
 			case 3:
-				startActivity(new Intent(this, Activity2.class));
+				startActivity(new Intent(this, SoundPoolActivity.class));
+				break;
+			case 4:
+				startActivity(new Intent(this, MediaPlayerActivity.class));
 				break;
 		}
 	}

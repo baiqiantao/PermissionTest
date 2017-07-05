@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="permission.bqt.com.permissiontest">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -17,8 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Activity1"/>
-        <activity android:name=".Activity2"/>
+        <activity android:name=".PermissionsDispatcherActivity"/>
+        <activity android:name=".SoundPoolActivity"/>
+        <activity android:name=".MediaPlayerActivity"/>
     </application>
 
 </manifest>

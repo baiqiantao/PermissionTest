@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Activity2 extends ListActivity {
+public class SoundPoolActivity extends ListActivity {
 	private SoundPool soundPool;
 	private List<Integer> soundIdList = new ArrayList<>();
 	

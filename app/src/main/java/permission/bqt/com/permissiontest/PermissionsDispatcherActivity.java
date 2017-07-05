@@ -19,7 +19,7 @@ import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
-public class Activity1 extends Activity {
+public class PermissionsDispatcherActivity extends Activity {
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,13 +28,13 @@ public class Activity1 extends Activity {
 		tv.setBackgroundColor(Color.YELLOW);
 		tv.setText("PermissionsDispatcher完整演示");
 		tv.setGravity(Gravity.CENTER);
-		tv.setOnClickListener(v -> Activity1PermissionsDispatcher.createFileWithCheck(Activity1.this));
+		tv.setOnClickListener(v -> PermissionsDispatcherActivityPermissionsDispatcher.createFileWithCheck(PermissionsDispatcherActivity.this));
 	}
 
 	@NeedsPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 	void createFile() {
 		Toast.makeText(this, "【NeedsPermission，用户允许了该权限】", Toast.LENGTH_SHORT).show();
-		MainActivity.createFileWithoutRequestPermission(Activity1.this);
+		MainActivity.createFileWithoutRequestPermission(PermissionsDispatcherActivity.this);
 	}
 
 	@OnPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -63,6 +63,6 @@ public class Activity1 extends Activity {
 	@Override
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-		Activity1PermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+		PermissionsDispatcherActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
 	}
 }
