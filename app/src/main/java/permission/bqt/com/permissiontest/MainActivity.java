@@ -33,7 +33,8 @@ public class MainActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		String[] array = {"在没有申请权限的情况下在SD卡创建文件会失败",
 				"完整的授权过程演示",
-				"演示PermissionsDispatcher",};
+				"演示PermissionsDispatcher",
+				"SoundPool演示",};
 		setListAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new ArrayList<>(Arrays.asList(array))));
 	}
 	
@@ -48,6 +49,9 @@ public class MainActivity extends ListActivity {
 				break;
 			case 2:
 				startActivity(new Intent(this, Activity1.class));
+				break;
+			case 3:
+				startActivity(new Intent(this, Activity2.class));
 				break;
 		}
 	}
