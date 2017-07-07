@@ -1,9 +1,12 @@
 package permission.bqt.com.permissiontest;
 
+import android.annotation.TargetApi;
 import android.app.ListActivity;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.Spannable;
@@ -19,7 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileDescriptor;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -84,7 +86,7 @@ public class MediaPlayerActivity extends ListActivity {
 		switch (position) {
 			case 0:
 				stop();
-				playMusicFromSDCardOrUrl(Environment.getExternalStorageDirectory() + File.separator + "caravan.mp3");
+				playMusicFromSDCardOrUrl(Environment.getExternalStorageDirectory() + File.separator + "voice/caravan.mp3");
 				break;
 			case 1:
 				stop();
@@ -93,7 +95,7 @@ public class MediaPlayerActivity extends ListActivity {
 			case 2:
 				stop();
 				try {
-					playMusicFromAssentOrRaw(getAssets().openFd("caravan.mp3").getFileDescriptor());
+					playMusicFromAssentOrRaw(getAssets().openFd("voice/hellow.mp3"));
 				} catch (IOException e) {
 					e.printStackTrace();
 					Toast.makeText(this, "播放失败！", Toast.LENGTH_SHORT).show();
@@ -102,7 +104,7 @@ public class MediaPlayerActivity extends ListActivity {
 			case 3:
 				stop();
 				try {
-					playMusicFromAssentOrRaw(getResources().openRawResourceFd(R.raw.cf_bgm1).getFileDescriptor());
+					playMusicFromAssentOrRaw(getResources().openRawResourceFd(R.raw.hellow));
 				} catch (IOException e) {
 					e.printStackTrace();
 					Toast.makeText(this, "播放失败！", Toast.LENGTH_SHORT).show();
@@ -142,11 +144,12 @@ public class MediaPlayerActivity extends ListActivity {
 	/**
 	 * 播放assent或Raw中的音乐
 	 */
-	private void playMusicFromAssentOrRaw(FileDescriptor fileDescriptor) throws IOException {
-		//getAssets().openFd("caravan.mp3").getFileDescriptor();
-		//getResources().openRawResourceFd(R.raw.cf_bgm1).getFileDescriptor();
+	@TargetApi(Build.VERSION_CODES.N)
+	private void playMusicFromAssentOrRaw(AssetFileDescriptor afd) throws IOException {
+		//getAssets().openFd("caravan.mp3");
+		//getResources().openRawResourceFd(R.raw.cf_bgm1);
 
-		mediaPlayer.setDataSource(fileDescriptor);
+		mediaPlayer.setDataSource(afd);
 		mediaPlayer.prepareAsync();//异步准备
 		setPlayEnable(false);//播放时将“播放”按钮设置为不可点击
 	}
