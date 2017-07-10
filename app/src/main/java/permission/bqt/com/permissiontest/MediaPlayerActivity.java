@@ -104,7 +104,7 @@ public class MediaPlayerActivity extends ListActivity {
 			case 3:
 				stop();
 				try {
-					playMusicFromAssentOrRaw(getResources().openRawResourceFd(R.raw.hellow));
+					playMusicFromAssentOrRaw(getResources().openRawResourceFd(R.raw.hellow_tomorrow));
 				} catch (IOException e) {
 					e.printStackTrace();
 					Toast.makeText(this, "播放失败！", Toast.LENGTH_SHORT).show();
